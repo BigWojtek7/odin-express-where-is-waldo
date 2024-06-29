@@ -13,6 +13,12 @@ const app = express();
 
 app.use(cors());
 
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb+srv://wojtasjg:VWCta3rKJQuwvFus@cluster0.0tdju1c.mongodb.net/waldo?retryWrites=true&w=majority&appName=Cluster0')
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'mongo connection error'));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
