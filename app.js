@@ -9,9 +9,18 @@ const scoresRouter = require('./routes/scores');
 
 const cors = require('cors');
 
+const RateLimit = require('express-rate-limit');
+
 const app = express();
 
 app.use(cors());
+
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 30,
+});
+
+app.use(limiter);
 
 const mongoose = require('mongoose');
 
