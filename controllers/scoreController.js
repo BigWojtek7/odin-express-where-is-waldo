@@ -1,4 +1,4 @@
-const Score = require('..models/score');
+const Score = require('../models/score');
 const { body, validationResult } = require('express-validator');
 
 exports.all_scores_get = async (req, res, next) => {
@@ -10,7 +10,10 @@ exports.all_scores_get = async (req, res, next) => {
   }
 };
 exports.score_save_post = [
-  body('username', 'username is required').trim().isLength({ min: 3 }).escape(),
+  body('username', 'Username must be 3-15 characters')
+    .trim()
+    .isLength({ min: 3, max: 15 })
+    .escape(),
   body('time').trim().escape(),
 
   async (req, res) => {
@@ -24,7 +27,7 @@ exports.score_save_post = [
       return res.json(errors.array());
     } else {
       await score.save();
-      res.json('Score saved');
+      res.json({ success: true, msg: 'The score has been saved' });
     }
   },
 ];
